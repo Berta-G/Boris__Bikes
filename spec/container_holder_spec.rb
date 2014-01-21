@@ -1,10 +1,21 @@
 require_relative '../lib/bike_container'
 
-class ContainerHolder; include BikeContainer; end
+class ContainerHolder 
+
+include BikeContainer
+
+def initialize(options = {})
+		self.capacity = options.fetch(:capacity, capacity)
+end
+end
+
+def fill_station(station)
+		20.times { station.dock(Bike.new) }
+end
 
 describe BikeContainer do 
 	let(:bike) { Bike.new }
-	let(:holder) { ContainerHolder.new }
+	let(:holder) { ContainerHolder.new(:capacity => 20) }
 
 	it "should accept a bike" do
 		expect(holder.bike_count).to eq(0)
@@ -13,18 +24,22 @@ describe BikeContainer do
 	end
 
 	it "should release a bike" do
-		
+				holder.dock(bike)
+				holder.release(bike)
+				expect(holder.bike_count).to eq(0)
 	end
 
-	it "should know when it's full" do 
-
+	it "should know it's full" do 
+		expect(holder).not_to be_full
+		fill_station(holder)
+		expect(holder).to be_full
 	end
 
-	it "should not accept a bike if it's full" do 
-
-	end
-
-	it "should provide a list of available bikes" do
-
+	it "should return the list of available bikes" do
+		broken_bike = Bike.new
+		broken_bike.break
+		holder.dock(bike)
+		holder.dock(broken_bike)
+		expect(holder.available_bikes).to eq([bike])
 	end
 end
