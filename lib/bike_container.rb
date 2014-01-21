@@ -26,7 +26,7 @@ module BikeContainer
 	alias_method :dock_original, :dock
 
 	def release(bike)
-		bikes.delete(bike)
+		 raise "Bike not found"  if bikes.delete(bike).nil?
 	end
 
 	def full?
@@ -37,5 +37,12 @@ module BikeContainer
 		bikes.reject { |bike| bike.broken? }
 	end
 
+	def empty?
+		bike_count == 0
+	end
 
 end
+
+
+
+
