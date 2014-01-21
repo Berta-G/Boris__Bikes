@@ -54,6 +54,12 @@ describe BikeContainer do
 	it "should know if it's empty" do 
 		expect(holder).to be_empty
 	end
+
+	it "should be able to list broken bikes" do 
+		bike.break
+		holder.dock(bike)
+		expect(holder.broken_bikes).to eq([bike])
+	end
 end
 
 
