@@ -60,6 +60,7 @@ describe BikeContainer do
 		holder.dock(bike)
 		expect(holder.broken_bikes).to eq([bike])
 	end
+	
 end
 
 
