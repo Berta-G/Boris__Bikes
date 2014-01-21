@@ -2,6 +2,7 @@ module BikeContainer
 
 	DEFAULT_CAPACITY = 10
 
+
 	def bikes
 		@bikes ||= []
 	end
@@ -22,6 +23,7 @@ module BikeContainer
 		raise "Station is full!" if full?
 		bikes << bike
 	end
+	alias_method :dock_original, :dock
 
 	def release(bike)
 		bikes.delete(bike)
@@ -34,4 +36,6 @@ module BikeContainer
 	def available_bikes
 		bikes.reject { |bike| bike.broken? }
 	end
+
+
 end
